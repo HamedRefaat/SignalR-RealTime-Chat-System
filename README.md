@@ -2139,5 +2139,5 @@ namespace GlobalGeobits.ChatApp.web.ErrorsLog
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/hamed1m54/GlobalGeobits.ChatApp/blob/master/License.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/hamed1m54/SignalR-RealTime-Chat-System/blob/master/License.md) file for details
 
