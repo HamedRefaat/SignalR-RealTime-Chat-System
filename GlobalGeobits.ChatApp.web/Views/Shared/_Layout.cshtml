@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -GlobalGiobits Chat</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+   
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse">
+
+
+                @if (Session["user_id"] != null && Session["user_displyname"] != null)
+                {
+
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+
+
+                        @{
+
+                            int userid = int.Parse(Session["user_id"].ToString());
+                            string username = Session["user_displyname"].ToString();
+
+
+
+                        }
+
+                        <li>
+                            <a href="~/Account/edit/@userid"><img height="60" width="60" src="~/Content/Images/@ViewBag.currntuser_gender-1.png" title="@ViewBag.username" /></a>
+
+                        </li>
+                        <li>
+
+                            <h2> <a id="userlogout" href="~/Account/logout">Log Out</a> </h2>
+                        </li>
+
+
+                    </ul>
+                }
+
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+                    </ul>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Hamed Refaat</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/toastr.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

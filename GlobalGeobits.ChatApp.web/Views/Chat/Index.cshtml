@@ -1,0 +1,345 @@
+﻿@model  GlobalGeobits.ChatApp.web.Models.CombiendModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 id="chatpage">Chat Room</h2>
+<h2>
+    Wellcom @ViewBag.username to Chat App.
+</h2>
+
+<style>
+    div.panel-body {
+        overflow: scroll;
+        background: url('http://subtlepatterns.com/patterns/geometry2.png');
+    }
+</style>
+
+<div class="row">
+
+    <input type="hidden" id="currentUserId" value=@ViewBag.currntuser_id />
+    <input type="hidden" id="currentUserDisplayName" value=@ViewBag.currentUserDisplayName />
+    <input type="hidden" id="currentUserGender" value=@ViewBag.currntuser_gender />
+
+    <div class=" col-md-3">
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <h3>Friends</h3> 
+                <i class="fa fa-paper-plane fa-fw"></i>
+            </div>
+            <div class="panel-body" style="height:380px;">
+                <ul id= "userlist">
+                    @if (Model.Users != null)
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            int uid = -1;
+
+                            if (user != null)
+                            {
+                                uid = user.UserID;
+
+                            }
+
+                            <li id="@user.UserID-1" style="margin-left:-44px;">
+
+                                <h3 id="userdisname" style="display:inline-block;">
+                                    <a href="/chat/index/@user.UserID#chat">@user.UserDisplayName</a>
+                                    
+
+                                </h3>
+
+                                    <span id="@user.UserID" style="color: gray; font-size : x-large">•</span>
+  
+                            </li>
+
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-9">
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                @if (ViewBag.ChatWithName != null)
+                {
+
+                    <input type="hidden" id="inChatuser" value=@ViewBag.userid />
+                    <input type="hidden" id="inChatuserGender" value=@ViewBag.chatWithGender />
+
+                    <h3 id="chattab"> @ViewBag.ChatWithName  is @ViewBag.Status  </h3>
+                }
+
+
+
+                <i class="fa fa-paper-plane fa-fw"></i>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id="chat" style="height:300px;">
+                <input type="hidden" id="displayname" />
+
+
+
+
+
+                @if (@ViewBag.ChatWithName != null && Model.Conversation != null)
+    {
+        int myfrindid = int.Parse(ViewBag.userid.ToString());
+
+        foreach (var conv in Model.Conversation)
+        {
+
+            if (conv.MessageSenderID == myfrindid)
+            {
+                
+                    <p id="friend" style="color:green; text-align:left;">
+                        <div class="row">
+                            <div class="col-4" style="min-width: 140px; max-width :140px;">
+
+                                <img src="~/Content/Images/@ViewBag.chatWithGender-1.png" title="@ViewBag.ChatWithName" />
+
+
+
+
+                            </div>
+                            <div class="col-8">
+                                <h3 style="margin-left: 20px;"> @ViewBag.ChatWithName </h3>
+
+                                @{
+                        string DateFormat = "";
+                        if (conv.MessageSentDateTime.Day == DateTime.Now.Day)
+                        {
+                            DateFormat = "Today at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                        }
+                        else if (conv.MessageSentDateTime.Day == DateTime.Now.Day - 1)
+                        {
+                            DateFormat = "YesterDay at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                        }
+                        else
+                        {
+
+                            DateFormat = String.Format("{0:f}", conv.MessageSentDateTime);
+                        }
+                                }
+
+                                <strong style="margin-left: 10px;">
+
+                                    @DateFormat
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="margin-left: 20px;">
+                                <strong style="color:green; ">
+
+                                    @conv.MessageContent;
+
+                                </strong>
+                            </div>
+                        </div>
+
+                    </p>
+                
+}
+else
+{
+
+
+    // my messages
+           
+                <p id="me" style="color:blue; text-align:left;">
+                    <div class="row">
+                        <div class="col-4" style="min-width: 140px; max-width :140px;">
+
+                            <img src="~/Content/Images/@ViewBag.currntuser_gender-1.png" title="@ViewBag.username" />
+
+
+
+
+                        </div>
+                        <div class="col-8">
+                            <h3 style="margin-left: 20px;"> @ViewBag.username </h3>
+
+                            @{
+                    string DateFormat = "";
+                    if (conv.MessageSentDateTime.Day == DateTime.Now.Day)
+                    {
+                        DateFormat = "Today at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                    }
+                    else if (conv.MessageSentDateTime.Day == DateTime.Now.Day - 1)
+                    {
+                        DateFormat = "YesterDay at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                    }
+                    else
+                    {
+
+                        DateFormat = String.Format("{0:f}", conv.MessageSentDateTime);
+                    }
+                            }
+
+                            <strong style="margin-left: 10px;">
+
+                                @DateFormat
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="margin-left: 20px;">
+                            <strong style="color:blue; ">
+
+                                @conv.MessageContent;
+
+                            </strong>
+                        </div>
+                    </div>
+
+                </p>
+          
+
+
+
+
+
+}
+
+
+}
+
+
+
+
+
+
+}
+else if (ViewBag.ChatWithName != null)
+{
+
+string text = "";
+
+if (ViewBag.chatWithGender == "Mael")
+{
+text = "Him";
+}
+else
+{
+text = "Her";
+}
+
+
+            <h1 id="noconvers" style="font-family:Arial;  color: sandybrown; align-content:center;"> No Conversation between you and @ViewBag.ChatWithName Start Texting with @text Now :)  </h1>
+
+}
+
+
+
+            </div>
+            <!-- /.panel-body -->
+
+
+
+            <div class="panel-footer">
+                @if (@ViewBag.ChatWithName != null)
+                {
+                    <div class="input-group">
+                        <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+                        <span class="input-group-btn">
+
+                            <input type="button" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
+
+                        </span>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio id="notificationsound">
+    <source src="~/Content/Soundes/plucky.mp3" type="audio/mpeg" />
+    <source src="~/Content/Soundes/plucky.ogg" type="audio/ogg" />
+
+</audio>
+
+
+
+@section scripts {
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <script src="~/Scripts/ChatHubManager.js"></script>
+  
+
+   
+
+    <script>
+
+
+$("#sendmessage").click(function () {
+
+
+
+
+    var message = $("#message").val();
+    var touser = $("#inChatuser").val();
+    var gender = $("#inChatuserGender").val();
+    $("#message").val("");
+    if (message.replace(/\s/g, '').length) {
+
+        chatHub.server.sendPrivateMessage(touser, message, gender);
+
+
+        $.ajax(
+            {
+                url: '/Chat/SaveMessage',
+                type: 'POST',
+                data: { MessageContent: message, MessageReceiverID: @ViewBag.userid
+    }
+}).done(function (response) {
+
+
+    $('#chat').append('<p id="me" style="color:blue; text-align:left;"><div class="row"><div class="col-4" style="min-width: 140px; max-width :140px;"><img src="/Content/Images/@ViewBag.currntuser_gender-1.png" title="@ViewBag.username" /></div><div class="col-8"><h3 style="margin-left: 20px;">@ViewBag.username </h3><strong style="margin-left: 10px;">' + response + '</strong></div></div><div class="row"><div class="col-12" style="margin-left: 20px;"><strong style="color:blue;  ">'
+        + message + '</strong></div></div></p>');
+
+    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+    $('#noconvers').hide();
+
+    toastr.success("Message send");
+
+}).fail(function (response) {
+
+    toastr.error("Messege not Sent " + response);
+});
+
+            }
+            else {
+    toastr.error("Empety Message And Spaces are Not Allowed");
+}
+
+
+        });
+
+
+    </script>
+
+
+
+
+
+
+}
