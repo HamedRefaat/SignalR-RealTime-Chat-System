@@ -1138,18 +1138,21 @@ namespace GlobalGeobits.ChatApp.web.Controllers
 @model GlobalGeobits.ChatApp.web.Models.Users
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Register New User";
 }
 
-<h2>Register</h2>
-
-
-@using (Html.BeginForm()) 
+<h2>Regester New User</h2>
+@if (ViewBag.error == "eex")
+{
+    <h3 style="color: red">Email already exists</h3>
+    <h4>Please, @Html.ActionLink("Login here", "login") </h4>
+}
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>GlobalGeobits ChatApp</h4>
+        <h4>Regidter New User</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -1176,6 +1179,13 @@ namespace GlobalGeobits.ChatApp.web.Controllers
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserGender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.UserGender, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserGender, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.UserDateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -1189,10 +1199,124 @@ namespace GlobalGeobits.ChatApp.web.Controllers
             @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
-                <span id="result"></span>
-                 
-             </div>
+                @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger", @id = "valmal" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Already has an Account?", "login")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="~/Scripts/Registrationjs.js"></script>
+}
+  ```
+  * Thanks after registration View
+  ```html
+
+@{
+    ViewBag.Title = "Thanks";
+}
+
+<h1>Welcome @ViewBag.userName Thanks for Registration. Please, @Html.ActionLink("Login here","login")</h1>
+
+```
+#Edit View
+```html
+@model GlobalGeobits.ChatApp.web.Models.Users
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Users</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UserID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserFristName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserFristName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserFristName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserLastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserLastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserLastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserDisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserDisplayName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserDisplayName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserGender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.UserGender, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserGender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserDateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserDateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserDateOfBirth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" , @disabled = "disabled" } })
+              
+            </div>
         </div>
 
         <div class="form-group">
@@ -1212,208 +1336,611 @@ namespace GlobalGeobits.ChatApp.web.Controllers
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
+<div>
+    @Html.ActionLink("Chat Room", "Index","Chat")
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-<script type="text/jscript">
-    $('#UserEmail').blur(function () {
-            var url = "/Account/CheckUsermail";
-            var mail = $('#UserEmail').val();
-            $.get(url, { input: mail }, function (data) {
-                if (data == "yes") {
-                    $("#result").html("<span style='color:green'>Available</span>");
-                    $("#UserEmail").css('background-color', '');
-                }
-                else {
-                    $("#result").html("<span style='color:red'>Email already exiestes</span>");
-                    $("#UserEmail").css('background-color', '#e97878');
-                }
-            });
-        })
-</script>
-    
 }
-
-
-  ```
-  * Thanks after registration View
-  ```html
-
-@{
-    ViewBag.Title = "Thanks";
-}
-
-<h1>Welcome @ViewBag.userName Thanks for Registration. Please, @Html.ActionLink("Login here","login")</h1>
-
-
 ```
+
 ## Home Views
-Not completed yet
 
 * Index view
 ```html
-
+@model  GlobalGeobits.ChatApp.web.Models.CombiendModel
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<h4>welcome, @ViewBag.username  @Html.ActionLink("logOut","logout")</h4>
+<h2 id="chatpage">Chat Room</h2>
+<h2>
+    Wellcom @ViewBag.username to Chat App.
+</h2>
 
-
-
-```
-
-  ### SignalR
-  ASP.NET SignalR is a new library for ASP.NET developers that makes it incredibly simple to add real-time web functionality to your applications. What is "real-time web" functionality? It's the ability to have your server-side code push content to the connected clients as it happens, in real-time.
-
-You may have heard of WebSockets, a new HTML5 API that enables bi-directional communication between the browser and server. SignalR will use WebSockets under the covers when it's available, and gracefully fallback to other techniques and technologies when it isn't, while your application code stays the same.
-
-SignalR also provides a very simple, high-level API for doing server to client RPC (call JavaScript functions in your clients' browsers from server-side .NET code) in your ASP.NET application, as well as adding useful hooks for connection management, e.g. connect/disconnect events, grouping connections, authorization.
-
-## Install SignalR
-
-* using this commant to install SignalR in the Project solution
-```
-Install-Package Microsoft.AspNet.SignalR
-```
-Or
-using NuGet Pacakge Manager
-* right click on project solution or From Tools
-* Manage Nuget Pacakge
-* Search or SignalR and install
-
-## startup class
-
-* after installing SignalR, you must add a class to the Project solution with name Startup.cs
-* add the follwing code to the class to enable the SignalR
-
-```csharp
-using Microsoft.Owin;
-using Owin;
-[assembly: OwinStartup(typeof(GlobalGeobits.ChatApp.web.Startup))]
-namespace GlobalGeobits.ChatApp.web
-{
-    public class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            // Any connection or hub wire up and configuration should go here
-            app.MapSignalR();
-        }
+<style>
+    div.panel-body {
+        overflow: scroll;
+        background: url('http://subtlepatterns.com/patterns/geometry2.png');
     }
-}
-  ```
-  ## hubs Class
-  To create a Hub, create a class that derives from [Microsoft.Aspnet.Signalr.Hub](https://msdn.microsoft.com/library/microsoft.aspnet.signalr.hub(v=vs.111).aspx). The following example shows a simple Hub class for a chat application.
-  ```csharp
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNet.SignalR;
-using GlobalGeobits.ChatApp.web.Models;
+</style>
 
-namespace GlobalGeobits.ChatApp.web.SignalR.hubs
-{
-    public class ChatHub : Hub
+<div class="row">
+
+    <input type="hidden" id="currentUserId" value=@ViewBag.currntuser_id />
+    <input type="hidden" id="currentUserDisplayName" value=@ViewBag.currentUserDisplayName />
+    <input type="hidden" id="currentUserGender" value=@ViewBag.currntuser_gender />
+
+    <div class=" col-md-3">
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <h3>Friends</h3> 
+                <i class="fa fa-paper-plane fa-fw"></i>
+            </div>
+            <div class="panel-body" style="height:380px;">
+                <ul id= "userlist">
+                    @if (Model.Users != null)
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            int uid = -1;
+
+                            if (user != null)
+                            {
+                                uid = user.UserID;
+
+                            }
+
+                            <li id="@user.UserID-1" style="margin-left:-44px;">
+
+                                <h3 id="userdisname" style="display:inline-block;">
+                                    <a href="/chat/index/@user.UserID#chat">@user.UserDisplayName</a>
+                                    
+
+                                </h3>
+
+                                    <span id="@user.UserID" style="color: gray; font-size : x-large">•</span>
+  
+                            </li>
+
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-9">
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                @if (ViewBag.ChatWithName != null)
+                {
+
+                    <input type="hidden" id="inChatuser" value=@ViewBag.userid />
+                    <input type="hidden" id="inChatuserGender" value=@ViewBag.chatWithGender />
+
+                    <h3 id="chattab"> @ViewBag.ChatWithName  is @ViewBag.Status  </h3>
+                }
+
+
+
+                <i class="fa fa-paper-plane fa-fw"></i>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id="chat" style="height:300px;">
+                <input type="hidden" id="displayname" />
+
+
+
+
+
+                @if (@ViewBag.ChatWithName != null && Model.Conversation != null)
     {
-        // a broadcast message
-        public void Send(string name, string message)
+        int myfrindid = int.Parse(ViewBag.userid.ToString());
+
+        foreach (var conv in Model.Conversation)
         {
-            Clients.All.addNewMessageToPage(name, message);
-        }
 
-       
+            if (conv.MessageSenderID == myfrindid)
+            {
+                
+                    <p id="friend" style="color:green; text-align:left;">
+                        <div class="row">
+                            <div class="col-4" style="min-width: 140px; max-width :140px;">
 
-        
+                                <img src="~/Content/Images/@ViewBag.chatWithGender-1.png" title="@ViewBag.ChatWithName" />
 
-        public void Connect(string UserName, int UserID)
-        {
+
+
+
+                            </div>
+                            <div class="col-8">
+                                <h3 style="margin-left: 20px;"> @ViewBag.ChatWithName </h3>
+
+                                @{
+                        string DateFormat = "";
+                        if (conv.MessageSentDateTime.Day == DateTime.Now.Day)
+                        {
+                            DateFormat = "Today at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                        }
+                        else if (conv.MessageSentDateTime.Day == DateTime.Now.Day - 1)
+                        {
+                            DateFormat = "YesterDay at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                        }
+                        else
+                        {
+
+                            DateFormat = String.Format("{0:f}", conv.MessageSentDateTime);
+                        }
+                                }
+
+                                <strong style="margin-left: 10px;">
+
+                                    @DateFormat
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="margin-left: 20px;">
+                                <strong style="color:green; ">
+
+                                    @conv.MessageContent;
+
+                                </strong>
+                            </div>
+                        </div>
+
+                    </p>
+                
+}
+else
+{
+
+
+    // my messages
            
-           //TooDo Connect on user private chat
+                <p id="me" style="color:blue; text-align:left;">
+                    <div class="row">
+                        <div class="col-4" style="min-width: 140px; max-width :140px;">
 
-        }
+                            <img src="~/Content/Images/@ViewBag.currntuser_gender-1.png" title="@ViewBag.username" />
 
-       
 
-        public void SendPrivateMessage(string ReciverId, string message)
-        {
-            //TOODo send message to a client with id
-        }
 
-        public void ReceivePrivateMessage(string SenderId, string message)
-        {
-            //TOODo Receive message to a client with id
-        }
-       
-      
-    }
-    
+
+                        </div>
+                        <div class="col-8">
+                            <h3 style="margin-left: 20px;"> @ViewBag.username </h3>
+
+                            @{
+                    string DateFormat = "";
+                    if (conv.MessageSentDateTime.Day == DateTime.Now.Day)
+                    {
+                        DateFormat = "Today at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                    }
+                    else if (conv.MessageSentDateTime.Day == DateTime.Now.Day - 1)
+                    {
+                        DateFormat = "YesterDay at " + String.Format("{0:t}", conv.MessageSentDateTime);
+                    }
+                    else
+                    {
+
+                        DateFormat = String.Format("{0:f}", conv.MessageSentDateTime);
+                    }
+                            }
+
+                            <strong style="margin-left: 10px;">
+
+                                @DateFormat
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="margin-left: 20px;">
+                            <strong style="color:blue; ">
+
+                                @conv.MessageContent;
+
+                            </strong>
+                        </div>
+                    </div>
+
+                </p>
+          
+
+
+
+
+
 }
 
-  ```
- 
- ## Connect To SignalR
- 
- 
- ```js
+
+}
+
+
+
+
+
+
+}
+else if (ViewBag.ChatWithName != null)
+{
+
+string text = "";
+
+if (ViewBag.chatWithGender == "Mael")
+{
+text = "Him";
+}
+else
+{
+text = "Her";
+}
+
+
+            <h1 id="noconvers" style="font-family:Arial;  color: sandybrown; align-content:center;"> No Conversation between you and @ViewBag.ChatWithName Start Texting with @text Now :)  </h1>
+
+}
+
+
+
+            </div>
+            <!-- /.panel-body -->
+
+
+
+            <div class="panel-footer">
+                @if (@ViewBag.ChatWithName != null)
+                {
+                    <div class="input-group">
+                        <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+                        <span class="input-group-btn">
+
+                            <input type="button" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
+
+                        </span>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio id="notificationsound">
+    <source src="~/Content/Soundes/plucky.mp3" type="audio/mpeg" />
+    <source src="~/Content/Soundes/plucky.ogg" type="audio/ogg" />
+
+</audio>
+
+
+
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
     <!--Reference the SignalR library. -->
-   
-<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 
-    <!--Reference the autogenerated SignalR hub script. -->
-    <script src="~/signalr/hubs"></script>
-    <!--SignalR script to update the chat page and send messages.-->
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <script src="~/Scripts/ChatHubManager.js"></script>
+  
+
+   
+
     <script>
-        $(function () {
-            // Reference the auto-generated proxy for the hub.
-            var chat = $.connection.chatHub;
-            // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
-                if (name == "Rania") {
-                    // Add the message to the page.
-                    $('#discussion').append('<p style="color:green; text-align:left; width:500px"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_7.png" title="Atir">'
-                        + ' </strong> ' + htmlEncode(message) + '</p>');
-                }
-                else if (name != "Rania") {
-                    // Add the message to the page.
-                    $('#discussion').append('<p style="color:blue;text-align:right;"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_71.png" title="Peter">'
-                        + ' </strong> ' + htmlEncode(message) + '</p>');
-                }
-            };
-            // Get the user name and store it to prepend to messages.
-            $('#displayname').val(prompt('Enter your Rania in one browser and any other name in the other Browser:', ''));
-            // Set initial focus to message input box.
-            $('#message').focus();
-            // Start the connection.
-            $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
-                    // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
-                    // Clear text box and reset focus for next comment.
-                    $('#message').val('').focus();
-                });
-            });
+
+
+$("#sendmessage").click(function () {
+
+
+
+
+    var message = $("#message").val();
+    var touser = $("#inChatuser").val();
+    var gender = $("#inChatuserGender").val();
+    $("#message").val("");
+    if (message.replace(/\s/g, '').length) {
+
+        chatHub.server.sendPrivateMessage(touser, message, gender);
+
+
+        $.ajax(
+            {
+                url: '/Chat/SaveMessage',
+                type: 'POST',
+                data: { MessageContent: message, MessageReceiverID: @ViewBag.userid
+    }
+}).done(function (response) {
+
+
+    $('#chat').append('<p id="me" style="color:blue; text-align:left;"><div class="row"><div class="col-4" style="min-width: 140px; max-width :140px;"><img src="/Content/Images/@ViewBag.currntuser_gender-1.png" title="@ViewBag.username" /></div><div class="col-8"><h3 style="margin-left: 20px;">@ViewBag.username </h3><strong style="margin-left: 10px;">' + response + '</strong></div></div><div class="row"><div class="col-12" style="margin-left: 20px;"><strong style="color:blue;  ">'
+        + message + '</strong></div></div></p>');
+
+    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+    $('#noconvers').hide();
+
+    toastr.success("Message send");
+
+}).fail(function (response) {
+
+    toastr.error("Messege not Sent " + response);
+});
+
+            }
+            else {
+    toastr.error("Empety Message And Spaces are Not Allowed");
+}
+
+
         });
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
+
+
     </script>
+}
+  ```
+  ### SignalR
+  ## hubs Class
+  To create a Hub, create a class that derives from [Microsoft.Aspnet.Signalr.Hub](https://msdn.microsoft.com/library/microsoft.aspnet.signalr.hub(v=vs.111).aspx). The following example shows a simple Hub class for a chat application.
+  ```csharp
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using System.Web.Mvc;
+
+namespace GlobalGeobits.ChatApp.web.SignalR.Hubs
+{
+    [HubName("chatHub")]
+    public class ChatHub : Hub
+    {
+
+        
+
+        static List<UserDetail> ConnectedUsers = new List<UserDetail>();
+      
+
+     
+
+        public void Connect(string userid, string userDisplayName, string Gender)
+        {
+            var id = Context.ConnectionId;
+            var user = ConnectedUsers.FirstOrDefault(u => u.UserId == userid);
+
+            
+                if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
+                {
+                    ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserId = userid, UserDisplayName= userDisplayName, Gender = Gender });
+                    
+
+                    // send to all except caller client
+                    Clients.AllExcept(id).onNewUserConnected(userid, userDisplayName);
+                // send connected now to caller
+                foreach (var u in ConnectedUsers) {
+                    if(u.ConnectionId != Context.ConnectionId)
+                    Clients.Caller.sendonlinuser(u.UserId);
+                        
+                        }
+                   
+            }
+            
+
+        }
+
+        public void SendMessageToAll(int userid, string message)
+        {
+            // store last 100 messages in cache
+         //   AddMessageinCache(userid, message);
+
+            // Broad cast message
+            Clients.All.messageReceived(userid, message);
+        }
+
+        public void SendPrivateMessage(string toUserId, string message, string gender)
+        {
+
+            string fromUserId = Context.ConnectionId;
+
+            var toUser = ConnectedUsers.FirstOrDefault(x => x.UserId == toUserId);
+            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
+
+            if (toUser != null && fromUser != null)
+            {
+                // send to 
+                Clients.Client(toUser.ConnectionId).sendPrivateMessage(fromUser.UserDisplayName, fromUser.UserId,fromUser.Gender, message);
+
+                // send to caller user
+              //  Clients.Caller.sendPrivateMessage(toUserId, toUser.UserId,toUser.Gender, message);
+            }
+
+        }
+
+        public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled )
+        {
+            var item = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
+            
+                if (item != null)
+            {
+                ConnectedUsers.Remove(item);
+
+                var id = Context.ConnectionId;
+                Clients.All.onUserDisconnected(id, item.UserId, item.UserDisplayName);
+
+            }
+
+            return base.OnDisconnected(stopCalled);
+        }
+
+
+    }
+
+
+}
+
+  ```
+ User Details for hub class
+ ```csharp
+ namespace GlobalGeobits.ChatApp.web.SignalR
+{
+    public class UserDetail
+    {
+        public string ConnectionId { get; set; }
+        public string UserId { get; set; }
+        public string UserDisplayName { get; set; }
+        public string Gender { get; internal set; }
+    }
+}
  ```
+ 
+ ## Connect To SignalR
+ # Hub Manager on client
+ a js file that register on the declared methods in the hub class
+ 
+ ```js
+// declare tha chathb 
+var chatHub
+$(document).ready(function () {
+    //assign the chat hub to our chathub class
+    chatHub = $.connection.chatHub;
+
+
+    //subscripe on the onNewUserConnected event so when a user connect the hub the assigend function will fire
+    // that's the use of the SignalR js proxy
+    chatHub.client.onNewUserConnected = function (userid, Name) {
+        // what to do when a new user connect the chat app ?
+        //ofcourse notifiy all user that the use is online now so thy can start a real time chat with him
+        toastr.success(Name + " Is online Now");
+
+        //what happend if the recent connected user is a new user just registerd now. So he is not in the user list
+
+        if ($('#' + userid + '-1').length)         // is user in the user list
+        {
+            // just change his status to make him online
+          
+            $("#" + userid + "").css("color", "green").css("font-size", "xx-large");
+            $("#chattab").text(Name + " is Online Now");
+
+        }
+        else {
+            // a new user register while other users are online so we have to append the user name to the ul
+            toastr.success("Say Hello to " + Name + "who just registerd Now");
+
+            var item = ' <li id="' + userid + '-1" style="margin-left:-44px;"> <h3 id = "' + Name + '"  style = "display:inline-block;" > <a href="/chat/index/' + userid + '#chat">' + Name + '</a></h3> <span id="' + userid + '" style="color: green; font-size : xx-large">•</span></li >';
+
+            $("#userlist").append(item);
+
+        }
+
+
+    }
+    // if user connect to the chat while there are othe user online, so when he connect
+    // he received a callback message from server tell'm who is online now
+    chatHub.client.sendonlinuser = function (userid) {
+        $("#" + userid + "").css("color", "green").css("font-size", "xx-large");
+
+        
+    }
+    // when user logout or close the browser
+    // the server send a message to all connected to tell that a user is offline
+
+    chatHub.client.onUserDisconnected = function (connectedid, userId, userDisplayName) {
+
+        var st = "offline";
+        toastr.warning(userDisplayName + " Is " + st);
+        $("#" + userId + "").css("color", "gray").css("font-size", "xx-large");
+
+        $("#chattab").text(userDisplayName + " is Online Offline");
+
+    }
+
+    // register on the sendprivatemessage method so when some one send a message to other one
+    //the recevier knows that he got an new message from the sender
+    chatHub.client.sendPrivateMessage = function (Name, userId, gender, message) {
+        // we have 2 senarioes here
+        //1- the recevier user already open the chat windwo the the sender so in this case we append the message in the reveiver chat window
+        //2- the revever dosent open the sender user chat windw so just notify him that he got a private message
+
+
+        var inchatuser = $("#inChatuser").val();
+
+        var d = new Date();
+        var UserInChat = $("#inChatuser").val();
+       // if the receiver open the sender chat windwo, hust append the message
+        if (UserInChat == userId) {
+            var tt = "Am";
+            var hr = d.getHours();
+            if (hr > 12) { hr = hr - 12; tt = "PM" }
+            var hrr = hr + "";
+            
+            if (hr < 10) {
+                hrr = "0" + hr;
+            }
+
+            
+            var min = d.getMinutes();
+            var minn = min + "";
+            if (min < 10) { minn = "0" + min }
+
+            var currntdate = "Today at " + hrr + ":" + minn + " " + tt;
+
+            var toappend = '<p id="friend" style="color:green; text-align:left;"><div class="row"><div class="col-4" style="min-width: 140px; max-width :140px;"><img src="/Content/Images/' + gender + '-1.png" title="' + Name + '"</div><div class="col-8"><h3 style="margin-left: 20px;"> ' + Name + ' </h3><strong style="margin-left: 10px;">' + currntdate + '</strong</div></div><div class="row"><div class="col-12" style="margin-left: 20px;"><strong style="color:green; ">' + message + '</strong></div></div></p>';
+            $('#chat').append(toappend);
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            $('#noconvers').hide();
+
+        }
+        else {
+            // the receiver open othe chat window or dosn't open any, so just notify him
+            // that he got a private message from sender and play a notification sound
+            // to let him know if he minimize the browser windw
+            toastr.success("You received a new message from your friend " + Name);
+            $("#" + userId + "").css("color", "red").css("font-size", "xx-large");
+
+            $("#" + userId + "-1").effect("shake", { direction: "right", times: 10, distance: 5 }, 1000);
+
+            $('#notificationsound')[0].play();
+        }
+    }
+
+
+    // start the hub to enable clients to register on events
+    $.connection.hub.start().done(function () {
+
+        var userid = $("#currentUserId").val();
+        //   alert("started");
+        var userDisplayName = $("#currentUserDisplayName").val();
+        var userGender = $("#currentUserGender").val();
+        chatHub.server.connect(userid, userDisplayName, userGender);
+    });
+
+});
+ ```
+ 
  ### DataBase Update
  I update the Users Model to add a status code that tells if the user is online or not 
  Here How we detect if user is online or not
@@ -1457,114 +1984,32 @@ namespace GlobalGeobits.ChatApp.web
 
 
 ```
+## Errors and exceptions Log
 
- ## Detect if user online
- ```html
-  <div class="col-md-3">
-        <div class="chat-panel panel panel-default">
-            <div class="panel-heading">
-                Users
-                <i class="fa fa-paper-plane fa-fw"></i>
-            </div>
-            <div class="panel-body" style="height:300px;">
-                <ul>
-                    @foreach (var user in Model)
-                    {
-                        int uid = -1;
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-                        if (user != null)
-                        {
-                            uid = user.UserID; 
-                        }
-                       
-                        <li>
-                            <h3>
-                              
-                        @Html.ActionLink(@user.UserDisplayName, "startconversation", new { id = uid })
+namespace GlobalGeobits.ChatApp.web.ErrorsLog
+{
+    public class  LogFilterExceptions : ActionFilterAttribute
+    {
 
-                                </h3>
-                            @if (user.status == 1) { 
-                                
-                           <span>online</span>
-                           
-                            }
-                            
-                            @if (user.status == 0)
-                            {
-                                <span>ofline</span>
-                            }
-                            
-                            
-                            
-
-                        </li>
-
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
- ```
- ## update status code in login and logout
- * in user login we update the status code to 1 which mean that user is online
- * in user sesstion time out or logout we udate the status code to 0 which mean user is ofline
- 
- # login update
-  
-  ```csharp
- [HttpPost]
-        public ActionResult Login(Users account) {
-
-            using (ChatAppDbContext db = new ChatAppDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u => u.UserEmail == account.UserEmail && u.UserPassword == account.UserPassword);
-                if (user != null)
-                {
-
-                    Session["user_id"] = user.UserID.ToString();
-                    user.status = 1; // here we change the status to be online
-                    db.SaveChanges();
-                    return RedirectToAction("chat", "Home");
-
-                }
-                else {
-                    ModelState.AddModelError("invaledlogin", "Email or password are not correct. Please, try again");
-                
-                }
-            }
-            return View();
-        }
-   ```
- 
-  # logout update
-  
-  ```csharp
-
-      public ActionResult logout()
+        public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
         {
-            int id = int.Parse(Session["user_id"].ToString());
-            using (ChatAppDbContext db = new ChatAppDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u => u.UserID == id);
-                if (user != null)
-                {
-                    user.status = 0;
-                    db.SaveChanges();
-                }
-            }
-            Session["user_id"] = null;
-            return RedirectToAction("login", "account");
+            if (actionExecutedContext.Exception == null) return;
+
+            File.AppendAllText(actionExecutedContext.HttpContext.Server.MapPath("~/Errors/logfilter.text"), "<EXP>" + Environment.NewLine + actionExecutedContext.Exception.ToString() + Environment.NewLine + "</EXP>" + Environment.NewLine);
         }
+    }
 
-   ```
-   
-   ### Work ToDo
-   * implement the connect method in chathub class to enable private chat
-   * saving the users messages history to the Database which alredy exiestes
-   * Update the online user list using Ajax or just using SignalR
 
-  
-
+}
+```
 
 ## Authors
 
